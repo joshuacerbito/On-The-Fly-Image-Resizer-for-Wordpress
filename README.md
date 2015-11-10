@@ -32,11 +32,11 @@ Twitter: http://twitter.com/joshuacerbito
 ## Changelog
 
 **v1.2**
-Updated $wpdb prepare query to accomodate guid or id checking
-Fixed "returning array even on $return_object = false" bug
+- Updated $wpdb prepare query to accomodate guid or id checking
+- Fixed "returning array even on $return_object = false" bug
 
 **v1.1**
-Added readme.md
+- Added readme.md
 
 **v1.0**
-Initial commit
+- Initial commit
