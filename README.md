@@ -9,7 +9,7 @@ An alternative (and a heavily-inspired) script to Aqua Resize (https://github.co
 
 ## How to use
 
-Just copy `otf_image_resize.php1 into your theme and reference it from your functions.php file e.g. `require_once('otf_image_resize.php');`, and that's it.
+Just copy `otf_image_resize.php` into your theme and reference it from your functions.php file e.g. `require_once('otf_image_resize.php');`, and that's it.
 
 You can then use it in your theme as such (simplest way to use it):
 ```
