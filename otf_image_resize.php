@@ -2,7 +2,7 @@
 /**
  * Title         : On-The-Fly Image Resizer
  * Description   : Resizes WordPress images on the fly
- * Version       : 1.1
+ * Version       : 1.2
  * Author        : Joshua Cerbito (@joshuacerbito)
  *
  * @param string  $img_object       - (required) must be uploaded using wp media uploader
@@ -18,7 +18,7 @@
  * @return array|str
  */
 
-function otf_image_resize( $img_object, $width = NULL, $height = NULL, $crop = true, $retina = false, $return_object = false ) {
+function otf_image_resize( $img_object, $width = NULL, $height = NULL, $crop = true, $retina = false, $return_object = false, $use_guid = false ) {
 
 	global $wpdb;
 
@@ -75,15 +75,15 @@ function otf_image_resize( $img_object, $width = NULL, $height = NULL, $crop = t
 		 *  Bail if this image isn't in the Media Library.
 		 *  We only want to resize Media Library images, so we can be sure they get deleted correctly when appropriate.
 		 */
-		$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE guid='%s'", $url );
+		$query = ( $use_guid )? $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE guid='%s'", $url ) : $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE id='%s' AND post_type='%s'", $img_object['ID'], 'attachment' );
 		$get_attachment = $wpdb->get_results( $query );
 		if ( !$get_attachment )
-			return array( 'url' => $url, 'width' => $width, 'height' => $height );
+      return ( $return_object )? array( 'url' => $url, 'width' => $width, 'height' => $height ) : $url;
 
 		// Load Wordpress Image Editor
 		$editor = wp_get_image_editor( $file_path );
 		if ( is_wp_error( $editor ) )
-			return array( 'url' => $url, 'width' => $width, 'height' => $height );
+      return ( $return_object )? array( 'url' => $url, 'width' => $width, 'height' => $height ) : $url;
 
 		// Get the original image size
 		$size = $editor->get_size();
@@ -148,13 +148,8 @@ function otf_image_resize( $img_object, $width = NULL, $height = NULL, $crop = t
 		);
 	}
 
-  // Return image array
-  if( $return_object ) {
-    return $image_array;
-  }
-
-	// Return image url
-	return $image_array['url'];
+  // Return image array|url
+  return ( $return_object )? $image_array : $image_array['url'];
 }
 
 ?>
