@@ -1,5 +1,5 @@
 # On-The-Fly Image Resizer for Wordpress
-### Version 1.1
+### Version 1.2
 
 * Author: Joshua Cerbito
 * Website: [Joshua Cerbito's Blog](http://medium.com/@joshcerbito)
